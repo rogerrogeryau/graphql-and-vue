@@ -3,11 +3,16 @@
     <h1>this is Home</h1>
     <!-- <v-btn color="accent ">button</v-btn> -->
     <!-- {{getPosts}} -->
-    <ul v-for="post in getPosts" :key="post._id">
+
+    <div v-if="$apollo.loading">Loading...</div>
+    <ul v-else v-for="post in posts" :key="post._id">
       <li>
         {{post.title}}, {{post.description}}, {{post.imageUrl}}
       </li>
+
     </ul>
+    {{result}}
+    <!-- {{err}} -->
   </v-container>
 </template>
 
@@ -34,7 +39,12 @@ export default {
   //     `
   //   }
   // }
-
+  data(){
+    return {
+      posts: [],
+      err:[]
+    }
+  },
   apollo:{
     getPosts:{
       query: gql`
@@ -51,7 +61,19 @@ export default {
           }
         }
               
-      `
+      `,
+      // result({...res}){
+      //   this.result = res
+      // }
+      result({data, loading, networkStatus}){
+        if (!loading) {
+          this.posts = data.getPosts
+        }
+      },
+      err({args}){
+        // this.err = args
+        console.log(`${err}`)
+      }
     }
   }
 }
