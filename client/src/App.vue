@@ -5,7 +5,7 @@
       <v-toolbar color="accent" dark flat>
         <v-toolbar-side-icon @click="drawerToggle"></v-toolbar-side-icon>
         <router-link to="/" tag="span" style="cursor:pointer">
-          <h1 pl-5>VueShare</h1>
+          <h1 pl-5>Hutchgo</h1>
         </router-link>
       </v-toolbar>
 
@@ -14,7 +14,7 @@
 
       <!-- side navbar links -->
       <v-list>
-        <v-list-tile v-for="item in sideBarNavItems" :key="item.key" :to="item.link">
+        <v-list-tile v-for="item in sideBarNavItems" :key="item.key" :to="item.link" ripple>
           <v-list-tile-action>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-action>
@@ -35,7 +35,7 @@
 
       <v-toolbar-title class="">
         <router-link to="/" tag="span" style="cursor:pointer">
-          VueShare
+          Hutchgo
         </router-link>
       </v-toolbar-title>
 
@@ -51,6 +51,7 @@
        single-line
        hide-details
        class="hidden-xs-only"
+       
        ></v-text-field>
 
 
@@ -76,7 +77,9 @@
     <!-- app content -->
     <main>
       <v-container class="mt-5">
-        <router-view/>
+        <transition name="fade">
+          <router-view/>
+        </transition>
       </v-container>
 
     </main>
@@ -121,3 +124,28 @@ export default {
 </script>
 
 
+<style scoped>
+  .fade-enter-active,
+  .fade-leave-active{
+    transition-property: opacity;
+    transition-duration: 1s;
+
+  }
+
+  .fade-enter{
+    opacity: 0;
+  }
+
+  .fade-enter-to{
+    opacity: 1;
+  }
+
+  .fade-leave{
+    opacity: 1;
+  }
+  .fade-leave{
+    opacity: 0;
+  }
+  
+
+</style>
