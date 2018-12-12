@@ -40,7 +40,7 @@
       </v-toolbar-title>
 
 
-      <v-spacer class=""></v-spacer>
+      <v-spacer></v-spacer>
       
       <!-- search input -->
       <v-text-field
@@ -78,7 +78,7 @@
     <main>
       <v-container class="mt-5">
         <transition name="fade">
-          <router-view/>
+          <router-view></router-view>
         </transition>
       </v-container>
 
@@ -128,23 +128,26 @@ export default {
   .fade-enter-active,
   .fade-leave-active{
     transition-property: opacity;
-    transition-duration: 1s;
-
+    transition-duration: 0.25s;
   }
 
   .fade-enter{
     opacity: 0;
+    /* transform: translateX(-25px); */
   }
 
   .fade-enter-to{
     opacity: 1;
+    /* transform: translateX(0px); */
   }
 
   .fade-leave{
     opacity: 1;
+    /* transform: translateX(px); */
   }
-  .fade-leave{
+  .fade-leave-to{
     opacity: 0;
+    /* transform: translateX(-25px); */
   }
   
 
