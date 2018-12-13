@@ -28,6 +28,9 @@ const server = new ApolloServer({
   }
 });
 
-server.listen().then(({ url }) => {
-  console.log(`Server listening on ${url}`);
-});
+server.listen()
+  .then(({ url }) => {
+    console.log(`Server listening on ${url}`);
+  })
+  .catch((err)=>{console.log})
+  ;
