@@ -78,6 +78,7 @@
     <main>
       <v-container class="mt-5">
         <transition name="fade">
+          
           <router-view></router-view>
         </transition>
       </v-container>
