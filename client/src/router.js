@@ -18,14 +18,15 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/home_vuex',
       name: 'Home_vuex',
       component: Home_vuex
     },
+    {
+      path: '/home_old',
+      name: 'home',
+      component: Home
+    },
+    
     {
       path: '/profile',
       name: 'Profile',

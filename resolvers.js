@@ -1,3 +1,5 @@
+const bcrypt = require("bcrypt");
+
 module.exports = {
     Query: {
         getUser: () => null,
@@ -37,6 +39,32 @@ module.exports = {
             }).save();
 
             return newUser;
+        },
+
+        signinUser: async(_, {username, password}, { User }) =>{
+            const user = await User.findOne({ username });
+            if (!user) {
+                throw new Error('User not found!');
+            }
+            // const isValidPassword = await bcrypt.compare(password, user.password)
+            // console.log(isValidPassword)
+            // // if (!isValidPassword) {
+            // //     throw new Error("Invalud Password!!")
+            // // }
+
+            // bcrypt.compare(password, user.password, (err, result) => {
+            //     console.log(result)
+            //     return user
+
+            // });
+            let isPaswordValid =await bcrypt.compare(password, user.password)
+            console.log(`pw: ${password}`)
+            console.log(`hashed pw: ${user.password}`)
+            console.log(isPaswordValid)
+            return user
+
+
+            
         }
     }
 }
