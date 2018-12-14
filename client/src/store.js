@@ -9,11 +9,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     posts:[],
-    loading:false
+    loading:true
 
   },
   getters:{
-    posts:state => state.posts
+    posts:state => state.posts,
+    loadingState:state => state.loading
   },
   mutations: {
     setPosts:(state, payload)=>{
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     },
     setLoading:(state, payload)=>{
       state.loading = payload;
+      // state.loading = false;
     },
   },
   actions: {
@@ -44,6 +46,7 @@ export default new Vuex.Store({
         }).then((data)=>{
           // get data from actions to state via mutations
           commit('setPosts',data.data.getPosts);
+          commit('setLoading',data.loading);
           console.log(data)
         }).catch((err)=>console.log)
         

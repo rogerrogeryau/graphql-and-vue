@@ -28,26 +28,33 @@
         </ul>
       </template>
     </ApolloQuery> -->
+    
+
+    <!-- <div v-if="!postsGetters.length>0 && stateLoadingGetters">Loading...</div> -->
+    <!-- carousel without the use of vuex -->
+    <v-flex xs12 text-xs-center>
+      <v-carousel v-if="!loadingState && !posts.length==0" v-bind="{'circle':true}" interval="3000">
+        <v-carousel-item v-for="post in posts" :key="post._id" :src="post.imageUrl">
+          <h1 id="carousel__title">{{post.title}}</h1>
+    
+        </v-carousel-item>
+        
+      </v-carousel>
+
+
     <v-layout row>
-      <v-dialog v-model="stateLoadingGetters" persistent fullscreen>
+      <v-dialog v-model="loadingState" persistent fullscreen>
         <v-container fill-height>
           <v-layout row justify-center align-center>
             <v-progress-circular indeterminate :size="70" :width="7" color="secondary">
-
+                
             </v-progress-circular>
           </v-layout>
         </v-container>
       </v-dialog>
     </v-layout>
 
-    <div v-if="!postsGetters.length>0 && !stateLoadingGetters">Loading...</div>
-    <!-- carousel without the use of vuex -->
-    <v-flex v-else xs12 text-xs-center>
-      <v-carousel v-bind="{'circle':true}" interval="3000">
-        <v-carousel-item v-for="post in postsGetters" :key="post._id" :src="post.imageUrl">
-          <h1 id="carousel__title">{{post.title}}</h1>
-        </v-carousel-item>
-      </v-carousel>
+
     </v-flex>
 
 
@@ -62,7 +69,7 @@
 
 <script>
 import {gql} from 'apollo-boost';
-
+import {mapGetters} from 'vuex';
 
 export default {
   name: 'home',
@@ -72,9 +79,11 @@ export default {
 
   data(){
     return {
-      posts:[],
+      // posts:[],
       err:[],
-
+      // loadingState:false
+      // loadingState:false
+  
       // getPostQuery:gql`
       //   query{
       //     getPosts{
@@ -99,13 +108,14 @@ export default {
     // }
   },
   computed:{
-    postsGetters(){
-      return this.$store.getters.posts;
-    },
-    stateLoadingGetters(){
-      return this.$store.getters.loadingState;
-    }
-
+    // postsGetters(){
+    //   return this.$store.getters.posts;
+    // },
+    // stateLoadingGetters(){
+    //   return this.$store.getters.loadingState;
+    //   // return true
+    // }
+    ...mapGetters(['posts', 'loadingState'])
     
   },
   created(){
