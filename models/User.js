@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const md5 = require("js-md5");
+const md5 = require("md5");
 const bcrypt = require("bcrypt");
 
 
@@ -35,7 +35,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 // create and add avatar to users
-UserSchema.pre('save', function(next){
+UserSchema.pre("save", function(next){
   this.avatar = `http://gravatar.com/avatar/${md5(this.username)}?d=identicon`;
   // this.avatar = 
   next()
@@ -43,18 +43,18 @@ UserSchema.pre('save', function(next){
 
 
 // hash password
-UserSchema.pre('save', function(){
+UserSchema.pre("save", function(next){
   if (!this.isModified('password')) {
+    // console.log(`${}`)
     return next();
   }
 
   bcrypt.genSalt(10,(err, salt)=>{
-    if (err) {
-      return next(err);
-    }
+    if (err) return (err);
 
     bcrypt.hash(this.password,salt,(err, hash)=>{
       if(err) return next(err);
+      // console.log(hash)
       this.password = hash;
       next();
     });

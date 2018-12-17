@@ -1,4 +1,13 @@
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+
+// create token JSON
+const createToken = (user, secret, expiresIn) =>{
+    // de-structure user obj
+    const { username, email } = user;
+    return jwt.sign({ username, email }, secret, {expiresIn});
+}
+
 
 module.exports = {
     Query: {
@@ -38,7 +47,9 @@ module.exports = {
                 password
             }).save();
 
-            return newUser;
+            // return newUser;
+
+            return {token: createToken(newUser,process.env.SECRET, '1hr')};
         },
 
         signinUser: async(_, {username, password}, { User }) =>{
@@ -58,10 +69,19 @@ module.exports = {
 
             // });
             let isPaswordValid =await bcrypt.compare(password, user.password)
-            console.log(`pw: ${password}`)
-            console.log(`hashed pw: ${user.password}`)
-            console.log(isPaswordValid)
-            return user
+            // console.log(`pw: ${password}`)
+            // console.log(`hashed pw: ${user.password}`)
+            // console.log(isPaswordValid)
+            if (!isPaswordValid) {
+                throw new Error('Password not matched!');
+            }
+            console.log(`PW:  ${user.password}`)
+            
+            
+            // return user  //depreciated
+
+            // return token with respect to the user found
+            return {token: createToken(user,process.env.SECRET, '1hr')};
 
 
             

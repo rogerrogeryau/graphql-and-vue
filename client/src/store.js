@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import {gql} from 'apollo-boost';
+// import {gql} from 'apollo-boost';
 import { defaultClient as apolloClient} from './main.js'
-import {GET_POSTS} from './queries'
+import {GET_POSTS, SIGNIN_USER, SIGNUP_USER} from './queries'
 
 Vue.use(Vuex)
 
@@ -25,6 +25,9 @@ export default new Vuex.Store({
       state.loading = payload;
       // state.loading = false;
     },
+    // signInUser:(state, payload)=>{
+      
+    // }
   },
   actions: {
     getPosts: ({commit}) => {
@@ -53,6 +56,18 @@ export default new Vuex.Store({
         }).catch((err)=>console.log)
         
     },
+    signInUser:({commit}, payload)=>{
+      apolloClient
+        .mutate({
+          mutation:SIGNIN_USER,
+          variables:payload
+        })
+        .then(({data})=>{
+          console.log(`Token is : ${data.signinUser.token}`);
+          localStorage.setItem("token",data.signinUser.token)
+        })
+        .catch.err(err=>console.log);
+    }
     
   }
 })

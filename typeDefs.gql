@@ -33,17 +33,34 @@ type Message {
   messageUser: User!
 }
 
+
+type Token{
+  token:String!
+}
+
 type Mutation {
+  # signupUser(
+  #   username:String!,
+  #   email:String!, 
+  #   password:String! 
+  # ): User!
+
   signupUser(
     username:String!,
     email:String!, 
     password:String! 
-  ): User!
+  ): Token
 
+  # signinUser(
+  #   username:String!,
+  #   password:String! 
+  # ): User!
+
+  # return user token rather than User obj
   signinUser(
     username:String!,
     password:String! 
-  ): User!
+  ): Token
   
   addPost(
     title: String!, 
